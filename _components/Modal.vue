@@ -5,7 +5,7 @@
     @click.prevent="openModal('volunteer')"
     @mouseenter="animateVolunteer"
   >
-    <slot name="box1"></slot>
+    <slot name="box1" />
   </a>
   <a
     :class="[freeBeds !== null && freeBeds > 0 ? 'group cursor-pointer' : 'opacity-70']"
@@ -13,7 +13,7 @@
     @click.prevent="openModal('gardener')"
     @mouseenter="animateGardener"
   >
-    <slot name="box2"></slot>
+    <slot name="box2" />
     <div
       v-if="freeBeds != null"
       class="absolute top-20 right-2 isolate z-30 -rotate-6 transform sm:top-24 xl:top-12 xl:-right-24"
@@ -27,15 +27,16 @@
       <span
         v-if="freeBeds <= 0"
         class="inline-flex items-center rounded-full bg-red-100 px-3 py-0.5 text-sm font-medium text-red-800 lg:text-base"
-        >Máme plno!</span
-      >
+      >Máme plno!</span>
     </div>
   </a>
   <!-- Newsletter section -->
   <div class="col-span-1 pt-12 sm:col-span-2 sm:pt-20 lg:pt-24">
     <div class="relative mx-auto mb-2 sm:mr-10 sm:max-w-lg lg:mr-auto lg:max-w-xl">
-      <slot name="newsletter"></slot>
-      <h3 class="text-xl font-semibold text-primary-900">Odebírat novinky</h3>
+      <slot name="newsletter" />
+      <h3 class="text-xl font-semibold text-primary-900">
+        Odebírat novinky
+      </h3>
       <p class="prose prose-lg text-primary-900">
         Zatím vyčkávám ve stínu ale chci mít přehled o tom, co se děje v zahradě.
       </p>
@@ -47,15 +48,15 @@
       >
         <label for="email-address" class="sr-only">E-mailová adresa</label>
         <input
-          v-model="forms.newsletter"
           id="email-address"
+          v-model="forms.newsletter"
           name="email-address"
           type="email-address"
           autocomplete="email-address"
           required="true"
           class="w-full rounded-md border-gray-300 px-5 py-3 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500 sm:max-w-xs"
           placeholder="Zadejte e-mail"
-        />
+        >
         <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
           <button
             type="submit"
@@ -165,13 +166,13 @@
                     v-if="formType === 'volunteer'"
                     v-model="forms.volunteer"
                     :validations="v.volunteer"
-                  ></VolunteerForm>
+                  />
                   <!-- GardenerForm -->
                   <GardenerForm
                     v-if="formType === 'gardener'"
                     v-model="forms.gardener"
                     :validations="v.gardener"
-                  ></GardenerForm>
+                  />
                   <!-- Thank you -->
                   <div v-if="formType === 'submitted'" class="prose prose-lg">
                     <p>Obdrželi jsme vaši registraci a brzy vám ji potvrdíme emailem.</p>
@@ -195,10 +196,10 @@
                 Odeslat
               </button>
               <button
+                ref="cancelButtonRef"
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 @click="open = false"
-                ref="cancelButtonRef"
               >
                 Zpět
               </button>
@@ -211,21 +212,21 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from "vue"
-import axios from "axios"
-import { createClient } from "@supabase/supabase-js"
+import { ref, reactive, onMounted } from 'vue'
+import axios from 'axios'
+import { createClient } from '@supabase/supabase-js'
+
+import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import useVuelidate from '@vuelidate/core'
+import GardenerForm from '../components/GardenerForm.vue'
+import VolunteerForm from './VolunteerForm'
+import ErrorDisplay from './ErrorDisplay'
+import { rules } from './validationRules'
+import { formGardenerDefault, formVolunteerDefault } from './defaultFormData'
+import initAnimations from './gsapAnimations'
 
 // initialize supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_PUBLIC_KEY)
-
-import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue"
-import VolunteerForm from "./VolunteerForm"
-import GardenerForm from "./GardenerForm"
-import ErrorDisplay from "./ErrorDisplay"
-import useVuelidate from "@vuelidate/core"
-import { rules } from "./validationRules"
-import { formGardenerDefault, formVolunteerDefault } from "./defaultFormData"
-import initAnimations from "./gsapAnimations"
 
 export default {
   components: {
@@ -238,21 +239,21 @@ export default {
     GardenerForm,
     ErrorDisplay
   },
-  setup() {
+  setup () {
     const AVAILABLE_BEDS = 29
     const open = ref(false)
-    const formType = ref("volunteer")
+    const formType = ref('volunteer')
     const freeBeds = ref(null)
 
     onMounted(async () => {
       // get data about flower beds
-      let { data: members, error } = await supabase.from("Members").select("flower-beds")
+      const { data: members, error } = await supabase.from('Members').select('flower-beds')
       if (members && members.length) {
         const takenBeds = members.reduce((acc, member) => {
-          if (member["flower-beds"]) {
+          if (member['flower-beds']) {
             let bedNumber = 0
             try {
-              bedNumber = parseFloat(member["flower-beds"])
+              bedNumber = parseFloat(member['flower-beds'])
             } catch {
               bedNumber = 0
             }
@@ -269,88 +270,88 @@ export default {
     const forms = reactive({
       volunteer: formVolunteerDefault,
       gardener: formGardenerDefault,
-      newsletter: ""
+      newsletter: ''
     })
     const v = useVuelidate(rules, forms)
 
     const { animateGardener, animateVolunteer } = initAnimations()
 
-    function openModal(role) {
-      if (role === "gardener" && freeBeds.value <= 0) {
+    function openModal (role) {
+      if (role === 'gardener' && freeBeds.value <= 0) {
         return
       }
       formType.value = role
       open.value = true
     }
 
-    function resetCurrentForm() {
+    function resetCurrentForm () {
       v.value[formType.value].$reset()
     }
 
-    function encodeData(data) {
+    function encodeData (data) {
       return Object.keys(data)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-        .join("&")
+        .join('&')
     }
 
-    async function handleSubmit() {
+    async function handleSubmit () {
       v.value[formType.value].$touch()
       if (v.value[formType.value].$error) {
         return
       }
       const axiosConfig = {
-        header: { "Content-Type": "application/x-www-form-urlencoded" }
+        header: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }
       const response = await axios.post(
-        "/",
+        '/',
         encodeData({
-          "form-name": formType.value,
+          'form-name': formType.value,
           ...forms[formType.value]
         }),
         axiosConfig
       )
       if (response.status === 200) {
         // Save data to Supabase
-        const { data, error } = await supabase.from("Members").insert([forms[formType.value]])
+        const { data, error } = await supabase.from('Members').insert([forms[formType.value]])
 
         // Reset form by looping over properties
-        Object.keys(forms[formType.value]).forEach(key => {
+        Object.keys(forms[formType.value]).forEach((key) => {
           forms[formType.value][key] = formVolunteerDefault[key]
         })
         // Display confirmation
-        formType.value = "submitted"
+        formType.value = 'submitted'
       } else {
-        formType.value = "unsuccessful"
+        formType.value = 'unsuccessful'
       }
     }
 
-    async function handleNewsletter() {
+    async function handleNewsletter () {
       v.value.newsletter.$touch()
       if (v.value.newsletter.$error) {
         return
       }
       const axiosConfig = {
-        header: { "Content-Type": "application/x-www-form-urlencoded" }
+        header: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }
       const response = await axios.post(
-        "/",
+        '/',
         encodeData({
-          "form-name": "newsletter",
-          "email-address": forms.newsletter
+          'form-name': 'newsletter',
+          'email-address': forms.newsletter
         }),
         axiosConfig
       )
       if (response.status === 200) {
-        formType.value = "submitted"
+        formType.value = 'submitted'
         open.value = true
         // Save data to Supabase
         const { data, error } = await supabase
-          .from("Members")
-          .insert([{ "email-address": forms.newsletter, newsletter: true }])
-        forms.newsletter = ""
+          .from('Members')
+          .insert([{ 'email-address': forms.newsletter, newsletter: true }])
+        forms.newsletter = ''
         v.value.newsletter.$reset()
       } else {
-        formType.value = "unsuccessful"
+        formType.value = 'unsuccessful'
         open.value = true
       }
     }
