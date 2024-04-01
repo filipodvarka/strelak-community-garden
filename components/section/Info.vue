@@ -35,7 +35,8 @@
               d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
             />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg> </a>. Areál je otevřený od 6 do 22h široké veřejnosti.
+          </svg>
+        </a>. Areál je otevřený od 6 do 22h široké veřejnosti.
       </p>
       <h3>Co zajišťujeme?</h3>
       <p>
@@ -55,9 +56,8 @@
       <p>Velikost jednoho záhonu je 120x80 cm. Hloubka nedozírná.</p>
       <h3>Platba záhonu</h3>
       <p>
-        Abyste mohli být součástí naší komunitní zahrady a mít svůj záhonek, musíte se stát členem spolku.
-        <b>Základní roční příspěvek je 500 Kč</b>, doporučený je 700 Kč a nejnižší možná varianta pro studenty,
-        seniory a každého, kdo má pocit, že se ho to týká je 300 Kč.
+        Abyste mohli být součástí naší komunitní zahrady a mít svůj záhonek, musíte se stát členem spolku. <b>Základní
+          roční příspěvek je 1000Kč za jeden zákonem.</b> Do budoucna plánujeme sdílené záhonky.
       </p>
     </div>
     <img
