@@ -1,70 +1,125 @@
 <script setup lang="ts">
-// import { computed } from "vue";
 // import ErrorDisplay from "./ErrorDisplay";
 
 import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
+import type { Member } from '~/types/database'
+import useI18nWithPrefix from '~/utils/useI18nWithPrefix'
 
+const {
+  t
+} = useI18nWithPrefix('form.gardener')
+const {
+  t: tError,
+  tc: tcError
+} = useI18nWithPrefix('form.error')
+
+const requiredString = z.string({ required_error: tError('required') })
+const optionalString = z.string().optional()
 const schema = z.object({
-  email: z.string().email('Invalid email'),
-  password: z.string().min(8, 'Must be at least 8 characters')
+  full_name: requiredString.min(3, tcError('min', 3)),
+  email_address: requiredString.email(tError('email')),
+  phone_number: z.string().min(9, tcError('min', 9)).optional(),
+  city_part: optionalString,
+  flower_beds: z.enum(['0.5', '1', '1.5', '2']),
+  payment_tarif: z.number({
+    required_error: tError('required')
+  }),
+  newsletter: z.boolean(),
+  volunteer: z.boolean(),
+  soul_plant: optionalString,
+  notes_and_questions: optionalString
 })
-
 type Schema = z.output<typeof schema>
 
-const state = reactive({
-  email: undefined,
-  password: undefined
+const paymentOptions = [
+  { value: 300, label: t('payment_tarif.options.reduced') },
+  { value: 500, label: t('payment_tarif.options.middle') },
+  { value: 700, label: t('payment_tarif.options.full') }
+]
+
+const flowerBedOptions = [
+  { value: 0.5, label: t('flower_beds.options.half') },
+  { value: 1, label: t('flower_beds.options.one') },
+  { value: 1.5, label: t('flower_beds.options.one_and_half') },
+  { value: 2, label: t('flower_beds.options.two') }
+]
+
+const state = reactive<Member>({
+  full_name: '',
+  email_address: '',
+  phone_number: '',
+  city_part: '',
+  flower_beds: 0.5,
+  payment_tarif: '500',
+  newsletter: false,
+  volunteer: false,
+  soul_plant: '',
+  notes_and_questions: ''
 })
 
 async function onSubmit (event: FormSubmitEvent<Schema>) {
   // Do something with data
   console.log(event.data)
 }
-
-// export default {
-//   components: {
-//     ErrorDisplay,
-//   },
-//   props: {
-//     modelValue: {
-//       type: Object,
-//       default: {},
-//     },
-//     validations: {
-//       type: Object,
-//       default: {},
-//     },
-//   },
-//   emits: ["update:modelValue", "change"],
-//   setup(props, { emit }) {
-//     const formData = computed({
-//       get: () => props.modelValue,
-//       set: (value) => {
-//         emit("update:modelValue", value);
-//         emit("change");
-//       },
-//     });
-//
-//     return { formData };
-//   },
-// };
 </script>
 
 <template>
   <div class="pt-4 pb-0 sm:pb-4">
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-      <UFormGroup label="Email" name="email">
-        <UInput v-model="state.email" />
+    <UForm
+      :schema="schema"
+      :state="state"
+      class="grid grid-cols-8 gap-6"
+      method="POST"
+      data-netlify
+      data-netlify-honeypot="bot-field-gardener"
+      @submit="onSubmit"
+    >
+      <UFormGroup :label="t('full_name')" required name="full_name" autocomplete="full_name">
+        <UInput v-model="state.full_name" />
+      </UFormGroup>
+      <UFormGroup
+        :label="t('email_address')"
+        required
+        name="email_address"
+        autocomplete="email"
+        class="lg:col-span-5"
+      >
+        <UInput v-model="state.email_address" />
+      </UFormGroup>
+      <UFormGroup
+        :label="t('phone_number')"
+        name="phone_number"
+        autocomplete="phone_number"
+        class="lg:col-span-3"
+      >
+        <UInput v-model="state.phone_number" />
+      </UFormGroup>
+      <UFormGroup :label="t('city_part')" name="city_part" autocomplete="city_part">
+        <UInput v-model="state.city_part" />
+      </UFormGroup>
+      <UFormGroup :label="t('flower_beds.label')" required name="flower_beds" autocomplete="flower_beds">
+        <USelect
+          v-model="state.flower_beds"
+          :options="flowerBedOptions"
+        />
+      </UFormGroup>
+      <UFormGroup :label="t('payment_tarif.label')" :description="t('payment_tarif.description')" required name="payment_tarif" autocomplete="payment_tarif">
+        <URadioGroup
+          v-model="state.payment_tarif"
+          :options="paymentOptions"
+        />
+      </UFormGroup>
+      <UFormGroup :label="t('volunteer')" :description="t('volunteer_description')" name="volunteer" autocomplete="volunteer">
+        <UCheckbox v-model="state.volunteer" />
+      </UFormGroup>
+      <UFormGroup :label="t('newsletter')" :description="t('newsletter_description')" name="newsletter" class="flex flex-wrap items-baseline">
+        <UCheckbox v-model="state.newsletter" />
       </UFormGroup>
 
-      <UFormGroup label="Password" name="password">
-        <UInput v-model="state.password" type="password" />
+      <UFormGroup :label="t('notes_and_questions')" name="notes_and_questions">
+        <UTextarea v-model="state.notes_and_questions" />
       </UFormGroup>
-
-      <UButton type="submit">
-        Submit
-      </UButton>
     </UForm>
     <!--    <form-->
     <!--      name="gardener"-->
@@ -90,7 +145,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     <!--          <ErrorDisplay :validator="validations['full-name']" />-->
     <!--        </div>-->
 
-    <!--        <div class="relative col-span-8 lg:col-span-5">-->
+    <!--        <div class="relative col-span-8">-->
     <!--          <label-->
     <!--            for="email-address"-->
     <!--            class="block text-sm font-medium text-gray-700"-->

@@ -6,5 +6,41 @@
   "og": {
     "title": "Komunitní zahrada střelák",
     "description": "První komunitní zahrada v Hradci Králové vyrostla přímo v jeho srdci v parku Na Střeláku."
+  },
+  "form": {
+    "error": {
+      "required": "Povinné pole",
+      "email": "Neplatný e-mail",
+      "min": "Minimální délka je jeden znak | Minimalní délka je {count}"
+    },
+    "gardener": {
+      "full_name": "Jméno a příjmení",
+      "email_address": "E-mail",
+      "phone_number": "Telefon",
+      "city_part": "V jaké části Hradce bydlíte?",
+      "flower_beds": {
+        "label": "Kolik záhonů o rozměru 240 x 80 cm využijete?",
+        "options": {
+          "half": "Půl",
+          "one": "Jeden",
+          "one_and_half": "Jeden a půl",
+          "two": "Dva"
+        }
+      },
+      "payment_tarif": {
+        "label": "Platba",
+        "description": "Výše platby je na vás (neprokazujete se jako student/senior atp.), zvolte možnost podle vaší finanční situace. Údaje pro platbu pošleme po odeslání formuláře na váš e-mail.",
+        "options": {
+          "reduced": "Snížená - 300 Kč/sezóna",
+          "middle": "Akorát - 500 Kč/sezóna",
+          "full": "Ideál - 700 Kč/sezóna"
+        }
+      },
+      "volunteer": "Dobrovolník",
+      "volunteer_description": "Máte zájem se stát dobrovolníkem a pomoci s údržbou zahrady?",
+      "newsletter": "Novinky",
+      "newsletter_description": "Chci dostávat informace o akcích v zahradě.",
+      "notes_and_questions": "Prostor pro vaše poznámky či dotazy"
+    }
   }
 }

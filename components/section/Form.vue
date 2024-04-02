@@ -1,7 +1,7 @@
 <template>
-  <section id="app" class="mb-16 flex-1 md:mb-24 lg:mb-32">
+  <!--  <ClientOnly>-->
+  <section class="mb-16 flex-1 md:mb-24 lg:mb-32">
     <div class="grid grid-cols-1 space-y-8 sm:grid-cols-2 sm:space-y-0 sm:space-x-8">
-      <!-- Wrapper handles the click event from the button -->
       <Modal>
         <template #box1>
           <div class="relative flex flex-col items-start">
@@ -191,8 +191,8 @@
       </Modal>
     </div>
   </section>
+  <!--  </ClientOnly>-->
 
-  <!-- Workaround for Netlify forms -->
   <form name="volunteer" netlify netlify-honeypot="bot-field-volunteer" hidden>
     <input type="text" name="full-name">
     <input type="text" name="email-address">
@@ -221,5 +221,3 @@
     <input type="text" name="newsletter">
   </form>
 </template>
-<script setup lang="ts">
-</script>

@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-fonts',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    '@nuxtjs/supabase'
   ],
   experimental: {
     viewTransition: true,
@@ -67,6 +68,9 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'i18n',
     defaultLocale: 'cs'
+  },
+  supabase: {
+    redirect: false
   },
   nitro: {
     routeRules: {
