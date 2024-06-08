@@ -2,9 +2,6 @@ import process from 'node:process'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-// const apiBaseUrl = 'http://localhost:3001'
-// const apiBaseUrl = 'https://movies-proxy.vercel.app'
-
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
@@ -17,6 +14,12 @@ export default defineNuxtConfig({
     viewTransition: true,
     renderJsonPayloads: true
   },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
   colorMode: {
     preference: 'light'
   },

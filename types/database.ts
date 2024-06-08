@@ -6,14 +6,14 @@ type GeneratedFields ={
 export type Member = {
     full_name: string
     email_address: string
-    phone_number: string | null
-    city_part: string | null
-    soul_plant: string | null
-    flower_beds: number | null
-    payment_tarif: string | null
-    newsletter: boolean | null
-    volunteer: boolean | null
-    notes_and_questions: string | null
+    phone_number: string | undefined
+    city_part: string | undefined
+    newsletter: boolean | undefined
+    volunteer: boolean | undefined
+    notes_and_questions: string | undefined
+    flower_beds: number | undefined
+    payment_tarif: string | undefined
+    soul_plant: string | undefined
 }
 
 export type DBMember = Member & GeneratedFields

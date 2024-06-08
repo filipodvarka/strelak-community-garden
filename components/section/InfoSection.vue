@@ -57,7 +57,7 @@
       <h3>Platba záhonu</h3>
       <p>
         Abyste mohli být součástí naší komunitní zahrady a mít svůj záhonek, musíte se stát členem spolku. <b>Základní
-          roční příspěvek je 1000Kč za jeden zákonem.</b> Do budoucna plánujeme sdílené záhonky.
+          roční příspěvek je 1000Kč za jeden záhonek.</b> Do budoucna plánujeme sdílené záhonky.
       </p>
     </div>
     <img

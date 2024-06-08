@@ -24,6 +24,11 @@
       Zřizovatelem zahrady je Souhra, z.s a Komise místní samosprávy Pražské předměstí sever, partnerem Nadace Via
       a Kaufland.
     </p>
+    <p class="mx-auto max-w-lg text-center text-sm text-gray-500">
+      <NuxtLink to="/gdpr" class="underline hover:no-underline">
+        Ochrana osobních údajů
+      </NuxtLink>
+    </p>
     <p class="text-center text-sm text-gray-500">
       Ilustrace:
       <a

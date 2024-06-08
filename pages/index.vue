@@ -1,12 +1,10 @@
 <template>
   <div>
-    <SectionPlan />
-    <SectionInfo />
-    <SectionRules />
-    <!--    <ClientOnly>-->
-    <SectionForm />
-    <!--    </ClientOnly>-->
-    <SectionGallery />
-    <SectionFooter />
+    <PlanSection />
+    <InfoSection />
+    <RulesSection />
+    <FormSection />
+    <GallerySection />
+    <FooterSection />
   </div>
 </template>
