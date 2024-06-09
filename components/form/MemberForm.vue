@@ -15,10 +15,9 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18nWithPrefix('form.gardener')
-const client = useSupabaseClient()
 const {
   schema, state, flowerBedOptions,
-  paymentOptions
+  paymentOptions, handleSubmit: submitForm
 } = useForm(props.formType)
 type Schema = z.output<typeof schema>
 
@@ -27,17 +26,10 @@ const isError = ref(false)
 const availableFlowerBedOptions = computed(() => flowerBedOptions.filter(option => option.value <= (props.freeBeds ?? 0)))
 
 async function handleSubmit ({ data }: FormSubmitEvent<Schema>) {
+  const target = document.getElementById(`${props.formType}-form`) as HTMLFormElement
   try {
-    await submitForm('gardener', data)
+    await submitForm(data, target)
   } catch (error) {
-    isError.value = true
-    isDev() && console.error(error)
-    emit('error')
-    return
-  }
-  const { error } = await client.from('members').insert(data)
-
-  if (error) {
     isError.value = true
     isDev() && console.error(error)
     emit('error')

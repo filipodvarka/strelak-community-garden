@@ -4,6 +4,8 @@ import type { Member } from '~/types/database'
 import type { MemberType } from '~/types'
 
 export default function (formType: MemberType | 'newsletter') {
+  const client = useSupabaseClient()
+
   const {
     t
   } = useI18nWithPrefix('form.gardener')
@@ -31,33 +33,48 @@ export default function (formType: MemberType | 'newsletter') {
     : z.object({
       email_address: requiredString.email(tError('email'))
     })
+    type Schema = z.output<typeof schema>
 
-  const paymentOptions = [
-    { value: '1000', label: t('payment_tarif.options.new_full') }
-  ]
+    const paymentOptions = [
+      { value: '1000', label: t('payment_tarif.options.new_full') }
+    ]
 
-  const flowerBedOptions = [
-    { value: 1, label: t('flower_beds.options.one') },
-    { value: 2, label: t('flower_beds.options.two') }
-  ]
+    const flowerBedOptions = [
+      { value: 1, label: t('flower_beds.options.one') },
+      { value: 2, label: t('flower_beds.options.two') }
+    ]
 
-  const state = reactive<Member>({
-    full_name: '',
-    email_address: '',
-    phone_number: '',
-    city_part: '',
-    flower_beds: formType === 'gardener' ? 1 : undefined,
-    payment_tarif: formType === 'gardener' ? paymentOptions[0].value : undefined,
-    newsletter: true,
-    volunteer: formType === 'volunteer',
-    notes_and_questions: '',
-    soul_plant: ''
-  })
+    const state = reactive<Member>({
+      full_name: '',
+      email_address: '',
+      phone_number: '',
+      city_part: '',
+      flower_beds: formType === 'gardener' ? 1 : undefined,
+      payment_tarif: formType === 'gardener' ? paymentOptions[0].value : undefined,
+      newsletter: true,
+      volunteer: formType === 'volunteer',
+      notes_and_questions: '',
+      soul_plant: ''
+    })
 
-  return {
-    schema,
-    state,
-    flowerBedOptions,
-    paymentOptions
-  }
+    const handleSubmit = async (data: Schema, target: EventTarget | null) => {
+      console.log(data, target)
+      if (!target) { return }
+
+      await submitForm(new FormData(target as HTMLFormElement))
+      // @ts-ignore
+      const { error } = await client.from('members').insert(data)
+
+      if (error) {
+        throw error
+      }
+    }
+
+    return {
+      schema,
+      state,
+      flowerBedOptions,
+      paymentOptions,
+      handleSubmit
+    }
 }
