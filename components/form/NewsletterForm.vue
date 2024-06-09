@@ -3,26 +3,18 @@ import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
 
 const { t } = useI18nWithPrefix('form.gardener')
-const client = useSupabaseClient()
 const {
-  schema, state
+  schema, state, handleSubmit: submitForm
 } = useForm('newsletter')
 type Schema = z.output<typeof schema>
 
 const isError = ref(false)
 const isSubmitted = ref(false)
 
-async function handleSubmit ({ data }: FormSubmitEvent<Schema>) {
+async function handleSubmit ({ data, target }: FormSubmitEvent<Schema>) {
   try {
-    await submitForm('newsletter', data)
+    await submitForm(data, target)
   } catch (error) {
-    isError.value = true
-    isDev() && console.error(error)
-    return
-  }
-  const { error } = await client.from('members').insert({ ...data, newsletter: true })
-
-  if (error) {
     isError.value = true
     isDev() && console.error(error)
     return
