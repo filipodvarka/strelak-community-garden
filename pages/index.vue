@@ -3,7 +3,9 @@
     <PlanSection />
     <InfoSection />
     <RulesSection />
-    <FormSection />
+    <ClientOnly>
+      <FormSection />
+    </ClientOnly>
     <GallerySection />
     <FooterSection />
   </div>
