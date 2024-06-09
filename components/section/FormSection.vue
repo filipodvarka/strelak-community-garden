@@ -272,7 +272,7 @@ const handleModalClose = () => {
           </svg>
         </button>
 
-        <LazyMemberForm
+        <MemberForm
           v-if="!submitError && !isSubmitted"
           :form-type="formType"
           :free-beds="freeBeds "
