@@ -39,6 +39,7 @@ async function handleSubmit ({ data, target }: FormSubmitEvent<Schema>) {
     class="relative mt-8 w-full sm:flex"
     @submit="handleSubmit"
   >
+    <input type="hidden" name="form-name" value="newsletter">
     <template v-if="!isError && !isSubmitted">
       <UInput
         v-model="state.email_address"

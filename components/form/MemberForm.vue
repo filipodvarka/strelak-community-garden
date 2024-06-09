@@ -50,6 +50,7 @@ async function handleSubmit ({ data }: FormSubmitEvent<Schema>) {
     :data-netlify-honeypot="`bot-field-${formType}`"
     @submit="handleSubmit"
   >
+    <input type="hidden" name="form-name" :value="formType">
     <div class="grid grid-cols-8 gap-6 p-6">
       <UFormGroup :label="t('full_name')" required name="full_name" autocomplete="full_name">
         <UInput v-model="state.full_name" />
