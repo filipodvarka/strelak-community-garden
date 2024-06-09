@@ -45,8 +45,9 @@ async function handleSubmit ({ data }: FormSubmitEvent<Schema>) {
     :id="`${formType}-form`"
     :schema="schema"
     :state="state"
+    :name="formType"
     method="POST"
-    data-netlify
+    data-netlify="true"
     :data-netlify-honeypot="`bot-field-${formType}`"
     @submit="handleSubmit"
   >

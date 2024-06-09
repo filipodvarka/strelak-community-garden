@@ -34,7 +34,8 @@ async function handleSubmit ({ data, target }: FormSubmitEvent<Schema>) {
     :schema="schema"
     :state="state"
     method="POST"
-    data-netlify
+    name="newsletter"
+    data-netlify="true"
     data-netlify-honeypot="bot-field-newsletter"
     class="relative mt-8 w-full sm:flex"
     @submit="handleSubmit"
