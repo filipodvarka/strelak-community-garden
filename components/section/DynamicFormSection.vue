@@ -329,32 +329,4 @@ const handleModalClose = () => {
       </Modal>
     </div>
   </section>
-
-  <form name="volunteer" netlify netlify-honeypot="bot-field-volunteer" hidden>
-    <input type="text" name="full-name">
-    <input type="text" name="email-address">
-    <input type="text" name="phone-number">
-    <input type="text" name="city-part">
-    <input type="text" name="soul-plant">
-    <input type="text" name="newsletter">
-    <input type="text" name="volunteer">
-    <input type="text" name="notes-and-questions">
-  </form>
-
-  <form name="gardener" netlify netlify-honeypot="bot-field-gardener" hidden>
-    <input type="text" name="full-name">
-    <input type="text" name="email-address">
-    <input type="text" name="phone-number">
-    <input type="text" name="city-part">
-    <input type="text" name="flower-beds">
-    <input type="text" name="payment-tarif">
-    <input type="text" name="newsletter">
-    <input type="text" name="volunteer">
-    <input type="text" name="notes-and-questions">
-  </form>
-
-  <form name="newsletter" netlify netlify-honeypot="bot-field-newsletter" hidden>
-    <input type="text" name="email-address">
-    <input type="text" name="newsletter">
-  </form>
 </template>

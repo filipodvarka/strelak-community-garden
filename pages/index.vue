@@ -4,8 +4,9 @@
     <InfoSection />
     <RulesSection />
     <ClientOnly>
-      <FormSection />
+      <DynamicFormSection />
     </ClientOnly>
+    <StaticFormSection />
     <GallerySection />
     <FooterSection />
   </div>
