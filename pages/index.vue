@@ -1,6 +1,5 @@
 <template>
   <div>
-    <PlanSection />
     <InfoSection />
     <RulesSection />
     <ClientOnly>
