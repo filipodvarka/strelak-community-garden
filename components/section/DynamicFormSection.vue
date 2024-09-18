@@ -9,7 +9,7 @@ import NewsletterForm from '~/components/form/NewsletterForm.vue'
 
 const client = useSupabaseClient<Database>()
 
-const AVAILABLE_BEDS = 28
+const AVAILABLE_BEDS = 33
 
 const isOpen = ref(false)
 const formType = ref<MemberType>('volunteer')
