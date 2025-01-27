@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-fonts',
     '@nuxtjs/i18n',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase',
+    '@nuxt/image'
   ],
   experimental: {
     viewTransition: true,

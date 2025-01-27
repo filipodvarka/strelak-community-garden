@@ -39,3 +39,7 @@
 ### Notes
 
 On a slightly more complex project, you might want to implement a **store**. For Vue 3, this is done with [Pinia](https://pinia.vuejs.org/).
+
+## TODO
+
+ - use nuxt-img for all images
